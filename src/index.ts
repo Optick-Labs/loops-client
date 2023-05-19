@@ -1,82 +1,105 @@
-type ContactWithEmail = { email: string } & Record<string, string>
+type ContactWithEmail = { email: string } & Record<string, string>;
 
 export class LoopsClient {
-    private apiKey: string;
-    private baseUrl: string;
+  private apiKey: string;
+  private baseUrl: string;
 
-    constructor(apiKey: string, baseUrl = 'https://app.loops.so/api/v1') {
-        this.apiKey = apiKey;
-        this.baseUrl = baseUrl;
-    }
+  constructor(apiKey: string, baseUrl = 'https://app.loops.so/api/v1') {
+    this.apiKey = apiKey;
+    this.baseUrl = baseUrl;
+  }
 
-    private getHeaders(): Headers {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', `Bearer ${this.apiKey}`);
-        return headers;
-    }
+  private getHeaders(): Headers {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', `Bearer ${this.apiKey}`);
+    return headers;
+  }
 
-    async addContact(contact: ContactWithEmail) {
-        const response = await fetch(`${this.baseUrl}/contacts/create`, {
-            method: 'POST',
-            headers: this.getHeaders(),
-            body: JSON.stringify(contact)
-        });
+  async addContact(contact: ContactWithEmail) {
+    const response = await fetch(`${this.baseUrl}/contacts/create`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify(contact),
+    });
 
-        return response.json();
-    }
+    return response.json();
+  }
 
-    async updateContact(contact: ContactWithEmail) {
-        const response = await fetch(`${this.baseUrl}/contacts/update`, {
-            method: 'PUT',
-            headers: this.getHeaders(),
-            body: JSON.stringify(contact)
-        });
+  async updateContact(contact: ContactWithEmail) {
+    const response = await fetch(`${this.baseUrl}/contacts/update`, {
+      method: 'PUT',
+      headers: this.getHeaders(),
+      body: JSON.stringify(contact),
+    });
 
-        return response.json();
-    }
+    return response.json();
+  }
 
-    async findContact(email: string) {
-        const response = await fetch(`${this.baseUrl}/contacts/find?email=${encodeURIComponent(email)}`, {
-            method: 'GET',
-            headers: this.getHeaders(),
-        });
+  async findContact(email: string) {
+    const response = await fetch(
+      `${this.baseUrl}/contacts/find?email=${encodeURIComponent(email)}`,
+      {
+        method: 'GET',
+        headers: this.getHeaders(),
+      }
+    );
 
-        return response.json();
-    }
+    return response.json();
+  }
 
-    async deleteContactByEmail(email: string) {
-        const response = await fetch(`${this.baseUrl}/contacts/delete`, {
-            method: 'DELETE',
-            headers: this.getHeaders(),
-            body: JSON.stringify({ email })
-        });
+  async deleteContactByEmail(email: string) {
+    const response = await fetch(`${this.baseUrl}/contacts/delete`, {
+      method: 'DELETE',
+      headers: this.getHeaders(),
+      body: JSON.stringify({ email }),
+    });
 
-        return response.json();
-    }
+    return response.json();
+  }
 
-    async deleteContactById(userId: string) {
-        const response = await fetch(`${this.baseUrl}/contacts/delete`, {
-            method: 'DELETE',
-            headers: this.getHeaders(),
-            body: JSON.stringify({ userId })
-        });
+  async deleteContactById(userId: string) {
+    const response = await fetch(`${this.baseUrl}/contacts/delete`, {
+      method: 'DELETE',
+      headers: this.getHeaders(),
+      body: JSON.stringify({ userId }),
+    });
 
-        return response.json();
-    }
+    return response.json();
+  }
 
-    async sendEvent(eventName: string, contact: ContactWithEmail) {
-        const event = {
-            ...contact,
-            eventName,
-        };
+  async sendEvent(eventName: string, contact: ContactWithEmail) {
+    const event = {
+      ...contact,
+      eventName,
+    };
 
-        const response = await fetch(`${this.baseUrl}/events/send`, {
-            method: 'POST',
-            headers: this.getHeaders(),
-            body: JSON.stringify(event)
-        });
+    const response = await fetch(`${this.baseUrl}/events/send`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify(event),
+    });
 
-        return response.json();
-    }
+    return response.json();
+  }
+
+  async sendTransactionalEmail(
+    email: string,
+    transactionalId: string,
+    dataVariables: Record<string, string>
+  ) {
+    const input = {
+      transactionalId,
+      email,
+      dataVariables,
+    };
+
+    const response = await fetch(`${this.baseUrl}/transactional`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify(input),
+    });
+
+    return response.json();
+  }
 }
