@@ -30,10 +30,10 @@ myPackage('hello');
 
 [build-img]:https://github.com/Optick-Labs/loops-client/actions/workflows/release.yml/badge.svg
 [build-url]:https://github.com/Optick-Labs/loops-client/actions/workflows/release.yml
-[downloads-img]:https://img.shields.io/npm/dt/typescript-npm-package-template
-[downloads-url]:https://www.npmtrends.com/typescript-npm-package-template
-[npm-img]:https://img.shields.io/npm/v/typescript-npm-package-template
-[npm-url]:https://www.npmjs.com/package/typescript-npm-package-template
+[downloads-img]:https://img.shields.io/npm/dt/loops-client
+[downloads-url]:https://www.npmtrends.com/loops-client
+[npm-img]:https://img.shields.io/npm/v/loops-client
+[npm-url]:https://www.npmjs.com/package/loops-client
 [issues-img]:https://img.shields.io/github/issues/Optick-Labs/loops-client
 [issues-url]:https://github.com/Optick-Labs/loops-client/issues
 [codecov-img]:https://codecov.io/gh/Optick-Labs/loops-client/branch/main/graph/badge.svg
