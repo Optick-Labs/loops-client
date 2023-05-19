@@ -1,5 +1,3 @@
-import { type } from 'os';
-
 type Contact = {
   id: string;
   email: string;
@@ -26,6 +24,18 @@ type DeleteContactFailure = { success: false; message: string };
 type DeleteContactResponse = DeleteContactSuccess | DeleteContactFailure;
 
 type SendEventResponse = { success: boolean };
+
+type SendTransactionalEmailSuccess = { success: true };
+type SendTransactionalEmailFailure = {
+  success: false;
+  error: {
+    transactionalId: string;
+    reason: string;
+  };
+};
+type SendTransactionalEmailResponse =
+  | SendTransactionalEmailSuccess
+  | SendTransactionalEmailFailure;
 
 export class LoopsClient {
   private apiKey: string;
@@ -119,7 +129,7 @@ export class LoopsClient {
     email: string,
     transactionalId: string,
     dataVariables: Record<string, string>
-  ) {
+  ): Promise<SendTransactionalEmailResponse> {
     const input = {
       transactionalId,
       email,
@@ -132,6 +142,6 @@ export class LoopsClient {
       body: JSON.stringify(input),
     });
 
-    return response.json();
+    return response.json() as Promise<SendTransactionalEmailResponse>;
   }
 }
