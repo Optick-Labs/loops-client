@@ -22,10 +22,15 @@ yarn add loops-client
 ## Usage
 
 ```ts
-import { myPackage } from 'my-package-name';
+import { LoopsClient } from 'loops-client';
 
-myPackage('hello');
-//=> 'hello from my package'
+const client = new LoopsClient('YOUR-API-KEY');
+const response = await client.addContact({ email: 'email@example.com', firstName: 'foo', lastName: 'bar' });
+if(response.success) {
+    // Yay
+} else {
+    // Boo
+}
 ```
 
 [build-img]:https://github.com/Optick-Labs/loops-client/actions/workflows/release.yml/badge.svg
