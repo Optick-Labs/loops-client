@@ -1,13 +1,11 @@
-import { myPackage } from '../src';
+import { LoopsClient } from '../src';
 
 describe('index', () => {
-  describe('myPackage', () => {
-    it('should return a string containing the message', () => {
-      const message = 'Hello';
+  describe('LoopsClient', () => {
+    it('should be able to be constructed', () => {
+      const client = new LoopsClient('TEST_KEY');
 
-      const result = myPackage(message);
-
-      expect(result).toMatch(message);
+      expect(client).toBeDefined();
     });
   });
 });
